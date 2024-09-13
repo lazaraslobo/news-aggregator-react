@@ -60,6 +60,7 @@ axiosInstance.interceptors.response.use(
     (error) => {
         if(error.status === 401){
             deleteAllCookies();
+            window.location.href = window.location.origin + pagePaths.LOGIN_PAGE;
         }
         console.error('API ERROR => ', error);
         return Promise.reject(error);

@@ -5,16 +5,15 @@ import {post_logUserIn} from "../../apis";
 import {AxiosResponse} from "axios";
 
 function* handleLogin(action: ReturnType<typeof SAGA_ACTIONS.authLogin>) {
-    // Handle login logic here (e.g., API call)
     try {
         yield put(REDUCER_ACTIONS.setProcessing({ isProcessing: true }));
-        const response: AxiosResponse<any> = yield call(post_logUserIn, action.payload)
-        console.log("RESPONSE ", response);
-        yield put(REDUCER_ACTIONS.authLoginComplete({ isAuthenticated: true }));
-        // Dispatch success action or update state
+        const response: AxiosResponse<any> = yield call(post_logUserIn, action.payload);
+        if(response.data?.token && Object.keys(response.data?.user).length > 0) {
+            yield put(REDUCER_ACTIONS.authLoginComplete({ isAuthenticated: true }));
+            window.location.href = window.location.origin;
+        }
     } catch (error) {
         console.error("SAGA ERROR =>", error);
-        // Handle error
     }
 }
 

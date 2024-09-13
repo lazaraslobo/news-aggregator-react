@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './redux/store';
 
 function App() {
-  const {isAuthenticated, isProcessing} = useSelector((state: RootState) => state.auth);
+  const {isAuthenticated} = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     isAuthenticated === true && get_userInfo();
