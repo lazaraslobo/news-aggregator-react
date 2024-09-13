@@ -26,9 +26,11 @@ export const ButtonComponent: React.FC<ButtonCompProps> = ({
         <div className="button-container">
             <button className={`btn ${className}`} id={id} onClick={onClick} name={name} disabled={disabled}>
                 {text}
-                <div className="cta-inner-element mx-2">
-                    {children}
-                </div>
+                {children && (
+                    <div className="cta-inner-element mx-2">
+                        {children}
+                    </div>
+                )}
             </button>
         </div>
     )

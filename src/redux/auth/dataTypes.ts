@@ -3,6 +3,9 @@ import {SAGA_ACTION_TYPES} from "./actionTypes";
 // Define state type
 export type AuthState = {
     isAuthenticated: boolean;
+    isProcessing: boolean;
+    isFailed: boolean;
+    isSuccess: boolean;
 }
 
 // Define action payloads

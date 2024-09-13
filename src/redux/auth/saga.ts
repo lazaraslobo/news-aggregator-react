@@ -9,6 +9,9 @@ function* handleLogin(action: ReturnType<typeof SAGA_ACTIONS.authLogin>) {
         // Simulate API call
         yield call(() => new Promise((resolve) => setTimeout(resolve, 1000)));
         console.log("AFTER ", action)
+        yield put(REDUCER_ACTIONS.setProcessing({ isProcessing: true }));
+
+        yield call(() => new Promise((resolve) => setTimeout(resolve, 1000)));
 
         yield put(REDUCER_ACTIONS.authLoginComplete({ isAuthenticated: true }));
         // Dispatch success action or update state
