@@ -18,12 +18,12 @@ export const LoginPage: React.FC = () => {
 
     const [userInfo, setInfo] = useState<{ [key in keyof LoginPayload]: {value: string; hasError: boolean} }>({
         userEmail: {
-            hasError: true,
-            value: ""
+            hasError: false,
+            value: "john@example.com"
         },
         userPassword: {
-            hasError: true,
-            value: ""
+            hasError: false,
+            value: "password123"
         },
     });
 
