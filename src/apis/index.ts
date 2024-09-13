@@ -20,3 +20,7 @@ export const post_logUserIn = async ({ userEmail, userPassword }: LoginPayload) 
 export const get_userInfo = async () => {
     return handleApiRequest(() => axiosInstance.get('/user'));
 };
+
+export const post_logUserOut = async () => {
+    return handleApiRequest(() => axiosInstance.post('/logout'));
+};

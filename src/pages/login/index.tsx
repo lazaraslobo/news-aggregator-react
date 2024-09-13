@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './styles.scss';
 import {ProgressComponent} from "../../components/progress";
 import {InputBoxComponent} from "../../components/user-controlls/input-box";
@@ -7,14 +7,20 @@ import pagePaths from "../../routes/page-paths";
 import {Link} from "react-router-dom";
 import {LogoHeadingCardComponent} from "../../components/logo-heading-card";
 import type {LoginPayload} from '../../redux/auth/dataTypes';
-
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import useAuthActions from '../../hooks/useAuthActions';
+import {post_logUserOut} from '../../apis';
 
 export const LoginPage: React.FC = () => {
     const authState = useSelector((state: RootState) => state.auth);
     const authActions = useAuthActions();
+
+    useEffect(() => {
+        if(authState.isAuthenticated === true){
+            post_logUserOut();
+        }
+    }, []);
 
     const [userInfo, setInfo] = useState<{ [key in keyof LoginPayload]: {value: string; hasError: boolean} }>({
         userEmail: {
