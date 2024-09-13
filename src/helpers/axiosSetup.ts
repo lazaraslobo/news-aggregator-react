@@ -1,6 +1,8 @@
 import axios from 'axios';
+import {deleteAllCookies} from "../helpers/cookies";
+import pagePaths from "../routes/page-paths";
 
-const cookieApi = '/sanctum/csrf-cookie';
+const csrfCookieEndPoint = '/sanctum/csrf-cookie';
 const domainBaseUrl = process.env.REACT_APP_API_DOMAIN_PATH || 'http://localhost';
 
 // Create an Axios instance
@@ -18,10 +20,10 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     async (config) => {
         // Fetch CSRF token if not already fetching from /sanctum/csrf-cookie
-        if (config.url && ![cookieApi, '/login'].includes(config.url)) {
+        if (config.url && ![csrfCookieEndPoint].includes(config.url)) {
             try {
                 // Fetch CSRF token
-                await axios.get(`${domainBaseUrl}${cookieApi}`, { withCredentials: true });
+                await axios.get(`${domainBaseUrl}${csrfCookieEndPoint}`, { withCredentials: true });
             } catch (error) {
                 console.error('Failed to fetch CSRF token:', error);
                 // Handle error or redirect user if needed
@@ -56,6 +58,10 @@ axiosInstance.interceptors.response.use(
         return response;
     },
     (error) => {
+        if(error.status === 401){
+            // deleteAllCookies();
+            window.location.href = window.location.hostname + pagePaths.LOGIN_PAGE;
+        }
         console.error('API ERROR => ', error);
         return Promise.reject(error);
     }
