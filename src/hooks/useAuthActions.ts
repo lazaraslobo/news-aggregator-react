@@ -1,12 +1,12 @@
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../redux/store';
-import { authLogin, authLogout } from '../redux/auth/actions';
+import { SAGA_ACTIONS } from '../redux/auth/actions';
 
 const useAuthActions = () => {
     const dispatch = useDispatch<AppDispatch>();
 
-    const login = (userEmail: string, userPassword: string) => dispatch(authLogin({ userEmail, userPassword }));
-    const logout = () => dispatch(authLogout({}));
+    const login = (userEmail: string, userPassword: string) => dispatch(SAGA_ACTIONS.authLogin({ userEmail, userPassword }));
+    const logout = () => dispatch(SAGA_ACTIONS.authLogout({}));
 
     return { login, logout };
 };

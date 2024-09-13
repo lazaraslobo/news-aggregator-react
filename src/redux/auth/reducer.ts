@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { AuthState } from './types';
-import { authLogin, authLogout } from './actions';
+import type { AuthState } from './dataTypes';
+import { REDUCER_ACTIONS } from './actions';
 
 const initialState: AuthState = {
     isAuthenticated: false,
@@ -8,10 +8,11 @@ const initialState: AuthState = {
 
 const authReducer = createReducer(initialState, (builder) => {
     builder
-        .addCase(authLogin, (state, action) => {
+        .addCase(REDUCER_ACTIONS.authLoginComplete, (state, action) => {
+            console.log("in reducer");
             state.isAuthenticated = true;
         })
-        .addCase(authLogout, (state) => {
+        .addCase(REDUCER_ACTIONS.authLogoutComplete, (state) => {
             state.isAuthenticated = false;
         });
 });

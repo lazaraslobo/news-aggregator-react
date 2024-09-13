@@ -1,5 +1,5 @@
 import authReducer from './reducer';
-import { authLogin, authLogout } from './actions';
+import { SAGA_ACTIONS } from './actions';
 import authSaga from './saga';
 
-export { authLogin, authLogout, authSaga, authReducer };
+export { SAGA_ACTIONS, authSaga, authReducer };

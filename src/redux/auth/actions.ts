@@ -1,6 +1,13 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AUTH_LOGIN, AUTH_LOGOUT, LoginPayload, LogoutPayload } from './types';
+import { LoginPayload, LogoutPayload } from './dataTypes';
+import {SAGA_ACTION_TYPES, REDUCER_ACTION_TYPES} from "./actionTypes";
 
-// Action creators
-export const authLogin = createAction<LoginPayload>(AUTH_LOGIN);
-export const authLogout = createAction<LogoutPayload>(AUTH_LOGOUT);
+export const SAGA_ACTIONS = {
+    authLogin: createAction<LoginPayload>(SAGA_ACTION_TYPES.AUTH_LOGIN),
+    authLogout: createAction<LogoutPayload>(SAGA_ACTION_TYPES.AUTH_LOGOUT)
+}
+
+export const REDUCER_ACTIONS = {
+    authLoginComplete: createAction<{isAuthenticated: boolean}>(REDUCER_ACTION_TYPES.AUTH_LOGIN_COMPLETED),
+    authLogoutComplete: createAction<LogoutPayload>(REDUCER_ACTION_TYPES.AUTH_LOGOUT_COMPLETED)
+}
