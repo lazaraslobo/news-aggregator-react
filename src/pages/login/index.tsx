@@ -1,4 +1,3 @@
-// Signup.tsx
 import React, {useState} from 'react';
 import './styles.scss';
 import {ProgressComponent} from "../../components/progress";
@@ -12,8 +11,6 @@ import type {LoginPayload} from '../../redux/auth/dataTypes';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import useAuthActions from '../../hooks/useAuthActions';
-
-const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export const LoginPage: React.FC = () => {
     const authState = useSelector((state: RootState) => state.auth);
@@ -67,7 +64,7 @@ export const LoginPage: React.FC = () => {
                         <Link to={pagePaths.SIGNUP_PAGE} className="login-cta-link">Existing User?</Link>
                         <ButtonComponent text="LOGIN" className="cta-login btn-primary d-flex"
                              onClick={componentFunctions.handleLoginClick}
-                             disabled={userInfo.userEmail.hasError || userInfo.userPassword.hasError}
+                             disabled={userInfo.userEmail.hasError || userInfo.userPassword.hasError || authState.isProcessing}
                         >
                             {
                                 authState.isProcessing && <ProgressComponent progressType="border" color="warning" width={1} height={1}/>
