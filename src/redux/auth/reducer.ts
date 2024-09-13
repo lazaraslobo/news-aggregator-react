@@ -1,9 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
 import type { AuthState } from './dataTypes';
 import { REDUCER_ACTIONS } from './actions';
+import {getCookie} from "../../helpers/cookies";
 
 const initialState: AuthState = {
-    isAuthenticated: false,
+    isAuthenticated: !!getCookie('XSRF-TOKEN'),
     isFailed: false,
     isProcessing: false,
     isSuccess: false,
