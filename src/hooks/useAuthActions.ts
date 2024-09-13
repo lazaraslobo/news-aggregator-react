@@ -5,7 +5,7 @@ import { authLogin, authLogout } from '../redux/auth/actions';
 const useAuthActions = () => {
     const dispatch = useDispatch<AppDispatch>();
 
-    const login = (user: string) => dispatch(authLogin({ user }));
+    const login = (userEmail: string, userPassword: string) => dispatch(authLogin({ userEmail, userPassword }));
     const logout = () => dispatch(authLogout({}));
 
     return { login, logout };

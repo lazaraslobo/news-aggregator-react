@@ -13,8 +13,8 @@ import { RootState } from '../../redux/store';
 import useAuthActions from '../../hooks/useAuthActions';
 
 export const LoginPage: React.FC = () => {
-    const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
-    const { login, logout } = useAuthActions();
+    const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+    const authActions = useAuthActions();
 
     return (
         <div className="login-page-container d-flex justify-content-center">
@@ -28,7 +28,7 @@ export const LoginPage: React.FC = () => {
                     </div>
                     <div className="d-flex justify-content-between align-items-center mt-4">
                         <Link to={pagePaths.SIGNUP_PAGE} className="login-cta-link">Existing User?</Link>
-                        <ButtonComponent text="LOGIN" className="cta-login btn-primary d-flex" onClick={() => login('John Doe')}>
+                        <ButtonComponent text="LOGIN" className="cta-login btn-primary d-flex" onClick={() => authActions.login('lobo@gmail.com', "FOLK")}>
                             <ProgressComponent progressType="border" color="warning" width={1} height={1}/>
                         </ButtonComponent>
                     </div>

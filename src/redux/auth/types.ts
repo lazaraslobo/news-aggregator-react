@@ -5,12 +5,12 @@ export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 // Define state type
 export interface AuthState {
     isAuthenticated: boolean;
-    user: string | null;
 }
 
 // Define action payloads
 export interface LoginPayload {
-    user: string;
+    userEmail: string;
+    userPassword: string;
 }
 
 export interface LogoutPayload {}
