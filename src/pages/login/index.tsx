@@ -10,7 +10,7 @@ import type {LoginPayload} from '../../redux/auth/dataTypes';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import useAuthActions from '../../hooks/useAuthActions';
-import {post_logUserOut} from '../../apis';
+import {postApi_logUserOut} from '../../apis';
 
 export const LoginPage: React.FC = () => {
     const authState = useSelector((state: RootState) => state.auth);
@@ -18,7 +18,7 @@ export const LoginPage: React.FC = () => {
 
     useEffect(() => {
         if(authState.isAuthenticated === true){
-            post_logUserOut();
+            postApi_logUserOut();
         }
     }, []);
 
@@ -67,7 +67,7 @@ export const LoginPage: React.FC = () => {
                         />
                     </div>
                     <div className="d-flex justify-content-between align-items-center mt-4">
-                        <Link to={pagePaths.SIGNUP_PAGE} className="login-cta-link">Existing User?</Link>
+                        <Link to={pagePaths.SIGNUP_PAGE} className="login-cta-link">New User?</Link>
                         <ButtonComponent text="LOGIN" className="cta-login btn-primary d-flex"
                              onClick={componentFunctions.handleLoginClick}
                              disabled={userInfo.userEmail.hasError || userInfo.userPassword.hasError || authState.isProcessing}

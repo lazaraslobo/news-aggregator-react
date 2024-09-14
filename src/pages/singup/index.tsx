@@ -6,51 +6,67 @@ import {ButtonComponent} from "../../components/user-controlls/button";
 import pagePaths from "../../routes/page-paths";
 import { Link} from "react-router-dom";
 import {CreateAccountType} from "../../interfaces-types/UserTypes";
-import logoIcon from "../../resources/images/news-logo.webp";
 import {LogoHeadingCardComponent} from "../../components/logo-heading-card";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import useAuthActions from '../../hooks/useAuthActions';
+import { useNavigate } from 'react-router-dom';
 import './styles.scss';
+import { toast } from 'react-toastify';
 
 const defaultInputsValue: CreateAccountType = {
     fullName: {
         label: "Enter Name",
-        value: "",
+        value: "lobo",
         hasError: false
     },
     email: {
         label: "Enter Email",
-        value: "",
+        value: "lobo@gmail.com",
         hasError: false
     },
     password: {
         label: "Enter Password",
-        value: "",
+        value: "Lazaras@123",
         hasError: false
     }
 }
 
 export const SignupPage: React.FC = () => {
+    const authState = useSelector((state: RootState) => state.auth);
+    const authActions = useAuthActions();
+    const navigate = useNavigate();
 
     const [userInputs, setUserInputs] = useState<CreateAccountType>(defaultInputsValue)
 
-    const handleInputChanges = (key: keyof CreateAccountType, value: string) => setUserInputs({...userInputs, [key]: {...userInputs[key], value}});
-
-    const handleCreateAccount = () => {
-        let hasErrors = false;
-        const updatedInputs = { ...userInputs };
-
-        // Loop through keys and update the inputs object
-        Object.keys(userInputs).forEach((eachKey) => {
-            const key = eachKey as keyof CreateAccountType;
-            if (userInputs[key].value === "") {
-                hasErrors = true;
-                updatedInputs[key] = { ...userInputs[key], hasError: true };
+    const componentFunctions = {
+        handleInputChange : (key: keyof CreateAccountType, value: string, hasError: boolean = false) =>
+            setUserInputs({...userInputs, [key]: {...userInputs[key], value, hasError}}),
+        handleInputEvents : (key: keyof CreateAccountType) => (e: React.ChangeEvent<HTMLInputElement> | React.FocusEvent<HTMLInputElement>, hasError?: boolean) => {
+            const value = e.target.value;
+            const isError = hasError ?? false;
+            componentFunctions.handleInputChange(key, value, isError);
+        },
+        handleCreateAccount: () => {
+            if(!userInputs.password.hasError && !userInputs.password.hasError && !userInputs.password.hasError){
+                authActions.createAccount({
+                    password: userInputs.password.value,
+                    email: userInputs.email.value,
+                    name: userInputs.fullName.value,
+                    onSuccessCallback: componentFunctions.onSuccessAccountCreation,
+                    onErrorCallback: componentFunctions.onErrorAccountCreation,
+                })
             }
-        });
-
-        // Update the state once with the new inputs
-        setUserInputs(updatedInputs);
-        console.log("here ", updatedInputs);
+        },
+        onErrorAccountCreation: (msg: string) => toast(msg),
+        onSuccessAccountCreation: () =>  navigate(pagePaths.DASHBOARD_PAGE)
     }
+
+    //state loaders
+    const isDisableActions = authState.isProcessing ||
+        userInputs.fullName.hasError ||
+        userInputs.email.hasError ||
+        userInputs.password.hasError;
 
     return (
         <div className="signup-page-container d-flex justify-content-center">
@@ -58,34 +74,44 @@ export const SignupPage: React.FC = () => {
                 <LogoHeadingCardComponent heading="SIGN UP">
                     <div className="d-grid my-2">
                         <InputBoxComponent
+                            disabled={authState.isProcessing}
                             placeholder="Full Name"
                             type="text"
                             label="Enter Name"
-                            onChange={e => handleInputChanges('fullName', e.target.value)}
+                            onChange={componentFunctions.handleInputEvents('fullName')}
+                            onFocus={componentFunctions.handleInputEvents('fullName')}
+                            onBlur={componentFunctions.handleInputEvents('fullName')}
                             value={userInputs.fullName.value}
                             isError={userInputs.fullName.hasError}
                         />
                     </div>
                     <div className="d-grid my-2">
                         <InputBoxComponent
+                            disabled={authState.isProcessing}
                             placeholder="Email" type="email" label="Enter Email"
-                            onChange={e => handleInputChanges('email', e.target.value)}
+                            onChange={componentFunctions.handleInputEvents('email')}
+                            onFocus={componentFunctions.handleInputEvents('email')}
+                            onBlur={componentFunctions.handleInputEvents('email')}
                             isError={userInputs.email.hasError}
                             value={userInputs.email.value}
                         />
                     </div>
                     <div className="d-grid my-2">
                         <InputBoxComponent placeholder="Password" type="password" label="Enter Password"
-                                           onChange={e => handleInputChanges('password', e.target.value)}
-                                           value={userInputs.password.value}
-                                           isError={userInputs.password.hasError}
+                           disabled={authState.isProcessing}
+                           onChange={componentFunctions.handleInputEvents('password')}
+                           onFocus={componentFunctions.handleInputEvents('password')}
+                           onBlur={componentFunctions.handleInputEvents('password')}
+                           value={userInputs.password.value}
+                           isError={userInputs.password.hasError}
                         />
                     </div>
                     <div className="d-flex justify-content-between align-items-center mt-4">
                         <Link to={pagePaths.LOGIN_PAGE} className="login-cta-link">Existing User?</Link>
                         <ButtonComponent text="CREATE ACCOUNT" className="cta-signup btn-info d-flex"
-                                         onClick={handleCreateAccount}>
-                            <ProgressComponent progressType="border" color="warning" width={1} height={1}/>
+                             disabled={isDisableActions}
+                             onClick={componentFunctions.handleCreateAccount}>
+                            {authState.isProcessing && <ProgressComponent progressType="border" color="warning" width={1} height={1}/>}
                         </ButtonComponent>
                     </div>
                 </LogoHeadingCardComponent>

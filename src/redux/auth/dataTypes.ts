@@ -16,6 +16,15 @@ export type LoginPayload = {
 
 export type LogoutPayload  = {}
 
+export type CreateNewAccountPayload  = {
+    name: string;
+    email: string;
+    password: string;
+    onSuccessCallback?: () => void;
+    onErrorCallback?: (message: string) => void;
+}
+
+
 // Define action type= s
 type AuthLoginAction = {
     type: typeof SAGA_ACTION_TYPES.AUTH_LOGIN;

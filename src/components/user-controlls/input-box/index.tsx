@@ -14,6 +14,7 @@ type InputBoxProps = {
     label?: string;
     isRequired?: boolean;
     isError?: boolean;
+    disabled?: boolean;
 };
 
 const doNothing = (...props: any) => null;
@@ -31,6 +32,7 @@ export const InputBoxComponent: React.FC<InputBoxProps> = ({
                                                                isRequired = true,
                                                                label = "This field is required",
                                                                isError = false,
+                                                               disabled = false,
                                                            }: InputBoxProps) => {
     const [hasError, setHasError] = useState<boolean>(isError);
     const [errorMessage, setErrorMessage] = useState<string>("");
@@ -99,6 +101,7 @@ export const InputBoxComponent: React.FC<InputBoxProps> = ({
                 placeholder={placeholder}
                 id={id}
                 name={name}
+                disabled={disabled}
             />
         </div>
     );

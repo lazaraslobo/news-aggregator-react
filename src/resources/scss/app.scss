@@ -50,4 +50,18 @@ body{
         animation: fadeInScale 0.2s ease-out;
         animation-fill-mode: both;
     }
+
+    .Toastify{
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        align-items: center;
+        width: 100%;
+        top: 2rem;
+        z-index: 999999;
+        .Toastify__toast-container{
+            position: unset;
+            padding: 1rem;
+        }
+    }
 }
