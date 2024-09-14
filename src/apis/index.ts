@@ -27,3 +27,7 @@ export const postApi_logUserOut = async () => {
 export const postApi_createNewAccount = async (payload: CreateNewAccountPayload) => {
     return await axiosInstance.post('/register', {...payload, password_confirmation: payload.password});
 };
+
+export const getApi_getAllArticles = async () => {
+    return handleApiRequest(() => axiosInstance.get('/get-dashboard-data'));
+};

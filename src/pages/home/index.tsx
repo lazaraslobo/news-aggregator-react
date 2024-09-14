@@ -12,12 +12,14 @@ import { RootState } from '../../redux/store';
 import useAuthActions from '../../hooks/useAuthActions';
 import {postApi_logUserOut} from '../../apis';
 import {LeftPanelSection} from "./sections/LeftPanel";
+import useHomePageActions from "../../hooks/useHomePageActions";
 
 export const HomePage: React.FC = () => {
     const authState = useSelector((state: RootState) => state.auth);
-    const authActions = useAuthActions();
+    const homeActions = useHomePageActions();
 
     useEffect(() => {
+        homeActions.fetchAllArticles();
     }, []);
 
     const componentFunctions = {
