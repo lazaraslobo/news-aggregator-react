@@ -31,9 +31,18 @@ export const ArticleCardComponent: React.FC<EachArticleInformationType> = ({
                 <p>
                     {truncateText(description, 80)}
                 </p>
-                <a href={url} target="_blank" className="article-card-cta">
-                    OPEN
-                </a>
+                <div className="d-flex flex-wrap justify-content-between my-3 text-small">
+                    <span>{source || "-"}</span> ●
+                    <span>{topic || "-"}</span> ●
+                    <span>{author || "-"}</span>
+                </div>
+
+                <div className="d-flex justify-content-between">
+                    <a href={url} target="_blank" className="article-card-cta">
+                        OPEN
+                    </a>
+                    <span className="text-small">{publishedAt}</span>
+                </div>
             </div>
         </div>
     );

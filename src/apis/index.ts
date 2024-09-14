@@ -29,5 +29,5 @@ export const postApi_createNewAccount = async (payload: CreateNewAccountPayload)
 };
 
 export const getApi_getAllArticles = async () => {
-    return handleApiRequest(() => axiosInstance.get('/get-dashboard-data'));
+    return handleApiRequest(() => axiosInstance.get('/get-all-articles'));
 };
