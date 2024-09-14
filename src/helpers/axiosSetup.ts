@@ -20,7 +20,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     async (config) => {
         // Fetch CSRF token if not already fetching from /sanctum/csrf-cookie
-        if (config.url && ![csrfCookieEndPoint].includes(config.url)) {
+        if (config.url && ![csrfCookieEndPoint, '/logout'].includes(config.url)) {
             try {
                 // Fetch CSRF token
                 await axios.get(`${domainBaseUrl}${csrfCookieEndPoint}`, { withCredentials: true });
