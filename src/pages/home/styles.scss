@@ -1,0 +1,10 @@
+// styles.scss
+.home-page-container {
+    margin: 4rem 0;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.78);
+    .left-panel-section{
+        height: 100vh;
+        overflow-y: auto;
+    }
+}
