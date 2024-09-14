@@ -5,7 +5,7 @@ import {InputBoxComponent} from "../../components/user-controlls/input-box";
 import {ButtonComponent} from "../../components/user-controlls/button";
 import pagePaths from "../../routes/page-paths";
 import { Link} from "react-router-dom";
-import {CreateAccountType} from "@interfaces-types/UserAuthTypes";
+import {CreateAccountType} from "../../interfaces-types/UserAuthTypes";
 import {LogoHeadingCardComponent} from "../../components/logo-heading-card";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';

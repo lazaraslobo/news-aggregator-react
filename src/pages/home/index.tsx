@@ -15,7 +15,8 @@ import {LeftPanelSection} from "./sections/LeftPanel";
 import useHomePageActions from "../../hooks/useHomePageActions";
 
 export const HomePage: React.FC = () => {
-    const authState = useSelector((state: RootState) => state.auth);
+    const homeState = useSelector((state: RootState) => state.homePage);
+    console.log("here ", homeState);
     const homeActions = useHomePageActions();
 
     useEffect(() => {
@@ -27,7 +28,7 @@ export const HomePage: React.FC = () => {
 
     return (
         <div className="home-page-container container-fluid">
-            <div className="col-2 left-panel-section">
+            <div className="col-3 left-panel-section">
                 <LeftPanelSection />
             </div>
         </div>

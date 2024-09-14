@@ -6,8 +6,13 @@ const useHomePageActions = () => {
     const dispatch = useDispatch<AppDispatch>();
 
     const fetchAllArticles = () => dispatch(HOME_SAGA_ACTIONS.fetchArticles());
+    const updateUserFilterSelection = (props: {key: string, value: string}) =>
+        dispatch(HOME_SAGA_ACTIONS.updateUserFilterSelection(props));
 
-    return { fetchAllArticles};
+    return {
+        fetchAllArticles,
+        updateUserFilterSelection
+    };
 };
 
 export default useHomePageActions;

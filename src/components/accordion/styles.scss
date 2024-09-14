@@ -1,0 +1,20 @@
+.accordion{
+  .accordion-body{
+    .each-item{
+      padding: 8px 4px;
+      display: flex;
+      justify-content: space-between;
+      &:hover{
+        background: #e3dede;
+        border-radius: 5px;
+        cursor: pointer;
+        border-bottom: solid 1px red;
+      }
+    }
+
+    .selected{
+      color: orange;
+      font-weight: 600;
+    }
+  }
+}

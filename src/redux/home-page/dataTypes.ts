@@ -1,4 +1,3 @@
-// Define EachArticleInformationType for individual articles
 export type EachArticleInformationType = {
     source: string;
     title: string;
@@ -11,7 +10,6 @@ export type EachArticleInformationType = {
     author: string;
 };
 
-// Define the BaseArticleType with a generic type T for the article content
 type BaseArticleType<T> = {
     topics: string[];
     authors: { [key: string]: number };
@@ -23,12 +21,13 @@ type BaseArticleType<T> = {
     };
 };
 
-// ArticlesFetchApiResponseType will use EachArticleInformationType as the generic type T
 export type ArticlesFetchApiResponseType = BaseArticleType<EachArticleInformationType>;
 
-// HomePageStateType will extend BaseArticleType with the additional state properties
 export type HomePageStateType = BaseArticleType<EachArticleInformationType> & {
     isProcessing: boolean;
     isFailed: boolean;
     isSuccess: boolean;
+    userFilterSelections: {
+        [key: string]: string[];
+    }
 };

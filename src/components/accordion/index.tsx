@@ -1,39 +1,52 @@
 import React from "react";
+import "./styles.scss";
 
 // Define the props interface
 interface AccordionComponentProps {
     heading: string;
-    items: string[];
+    items: { [key: string]: number | any };
+    selectionList: string[]
+    onClick ?: (key: string) => void;
 }
 
-export const AccordionComponent: React.FC<AccordionComponentProps> = ({ heading, items }) => {
+const doNothing = (...props: any) => null;
+
+export const AccordionComponent: React.FC<AccordionComponentProps> = ({ heading, items, selectionList, onClick = doNothing }) => {
+
+    const componentId = `${heading}-accordion`;
+    const componentTargetId = `${heading}-target`;
+
     return (
-        <div className="accordion" id="accordionExample">
+        <div className="accordion" id={componentId}>
             <div className="accordion-item">
-                <h2 className="accordion-header" id="headingOne">
+                <h2 className="accordion-header" id={componentId}>
                     <button
                         className="accordion-button"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne"
+                        data-bs-target={`#${componentTargetId}`}
                         aria-expanded="true"
-                        aria-controls="collapseOne"
+                        aria-controls={componentTargetId}
                     >
                         {heading}
                     </button>
                 </h2>
                 <div
-                    id="collapseOne"
+                    id={componentTargetId}
                     className="accordion-collapse collapse show"
-                    aria-labelledby="headingOne"
-                    data-bs-parent="#accordionExample"
+                    aria-labelledby={componentId}
+                    data-bs-parent={`#${componentId}`}
                 >
-                    <div className="accordion-body">
-                        <ul>
-                            {items.map((item, index) => (
-                                <li key={index}>{item}</li>
-                            ))}
-                        </ul>
+                    <div className="accordion-body d-grid">
+                        {
+                            Object.keys(items).map((eachKey, index) => (
+                                <div className={`each-item ${selectionList.includes(eachKey) && 'selected'}`}
+                                     key={index} role="button" onClick={() => onClick(eachKey)}>
+                                        <span>{eachKey}</span>
+                                        {typeof items[eachKey] === 'number' && <span>{items[eachKey]}</span>}
+                                </div>
+                            ))
+                        }
                     </div>
                 </div>
             </div>
