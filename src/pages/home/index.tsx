@@ -18,15 +18,12 @@ import {EachArticleInformationType} from "../../redux/home-page/dataTypes";
 
 export const HomePage: React.FC = () => {
     const homeState = useSelector((state: RootState) => state.homePage);
-    console.log("here ", homeState);
+    const [userSearchTerm, setSearchTerm] = useState<string>("")
     const homeActions = useHomePageActions();
 
     useEffect(() => {
         homeActions.fetchAllArticles();
     }, []);
-
-    const componentFunctions = {
-    }
 
     return (
         <div className="home-page-container container-fluid d-flex flex-wrap p-0">
@@ -35,15 +32,41 @@ export const HomePage: React.FC = () => {
             </div>
             <div className="col-12 col-lg-9">
                 <div className="d-flex flex-wrap justify-content-around gap-5 m-5">
+                    <div className="d-flex col-12 search-bar">
+                        <InputBoxComponent
+                            isRequired={false}
+                            placeholder="Search..." type="text" className="search-bar"
+                            value={userSearchTerm}
+                            onChange={e => setSearchTerm(e.target.value)}
+                        />
+                    </div>
                     {
                         Object.keys(homeState.articles).map((eachTopicName, topicIndex) => (
                             Object.keys(homeState.articles[eachTopicName]).map((eachAuthor, authorIndex) => (
                                 (homeState.articles[eachTopicName][eachAuthor] as EachArticleInformationType[]).map((article, articleIndex) => {
+                                    const { userFilterSelections = {} } = homeState;
+
+                                    const hasUserSearchTermMatch =
+                                        article.source.toLowerCase().includes(userSearchTerm.toLowerCase()) ||
+                                        article.title.toLowerCase().includes(userSearchTerm.toLowerCase()) ||
+                                        article.description.toLowerCase().includes(userSearchTerm.toLowerCase()) ||
+                                        article.url.toLowerCase().includes(userSearchTerm.toLowerCase()) ||
+                                        article.imageSrc.toLowerCase().includes(userSearchTerm.toLowerCase()) ||
+                                        article.publishedAt.toLowerCase().includes(userSearchTerm.toLowerCase()) ||
+                                        article.content.toLowerCase().includes(userSearchTerm.toLowerCase()) ||
+                                        article.topic.toLowerCase().includes(userSearchTerm.toLowerCase()) ||
+                                        article.author.toLowerCase().includes(userSearchTerm.toLowerCase());
+
+                                    const isSelectedByFilters =
+                                        (userFilterSelections["articles"] || []).includes(article.topic) ||
+                                        (userFilterSelections["authors"] || []).includes(article.author) ||
+                                        (userFilterSelections["sources"] || []).includes(article.source);
+
+                                    const isFilterSelectionsEmpty = Object.keys(userFilterSelections).length === 0;
                                     const shouldRender =
-                                        !Object.keys(homeState.userFilterSelections || {}).length ||
-                                        (homeState.userFilterSelections["articles"] || []).includes(article.topic) ||
-                                        (homeState.userFilterSelections["authors"] || []).includes(article.author) ||
-                                        (homeState.userFilterSelections["sources"] || []).includes(article.source);
+                                        (userSearchTerm.length > 0 && hasUserSearchTermMatch) ||
+                                        (isSelectedByFilters && !isFilterSelectionsEmpty) ||
+                                        (isFilterSelectionsEmpty && !userSearchTerm);
 
                                     const uniqueKey = `${article.url}--${topicIndex}--${authorIndex}--${articleIndex}`;
 
