@@ -29,11 +29,11 @@ export const HomePage: React.FC = () => {
     }
 
     return (
-        <div className="home-page-container container-fluid d-flex">
-            <div className="col-3 left-panel-section">
+        <div className="home-page-container container-fluid d-flex flex-wrap p-0">
+            <div className="col-12 col-lg-3 left-panel-section">
                 <LeftPanelSection />
             </div>
-            <div className="col-9">
+            <div className="col-12 col-lg-9">
                 <div className="d-flex flex-wrap justify-content-around gap-5 m-5">
                     {
                         Object.keys(homeState.articles).map((eachTopicName, topicIndex) => (
