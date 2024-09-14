@@ -31,8 +31,8 @@ export const HomePage: React.FC = () => {
                 <LeftPanelSection />
             </div>
             <div className="col-12 col-lg-9">
-                <div className="d-flex flex-wrap justify-content-around gap-5 m-5">
-                    <div className="d-flex col-12 search-bar">
+                <div className="d-flex flex-wrap justify-content-around gap-5">
+                    <div className="d-flex col-12 search-bar p-3">
                         <InputBoxComponent
                             isRequired={false}
                             placeholder="Search..." type="text" className="search-bar"

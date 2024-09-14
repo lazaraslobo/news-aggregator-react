@@ -12,4 +12,14 @@
         }
     }
 
+    .search-bar{
+        .input-container{
+            width: 100%;
+            .search-bar{
+                padding: 1rem;
+                font-size: 1.25rem;
+            }
+        }
+    }
+
 }
