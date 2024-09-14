@@ -34,7 +34,7 @@ export const HomePage: React.FC = () => {
                 <LeftPanelSection />
             </div>
             <div className="col-9">
-                <div className="d-flex flex-wrap justify-content-between gap-5 m-5">
+                <div className="d-flex flex-wrap justify-content-around gap-5 m-5">
                     {
                         Object.keys(homeState.articles).map((eachTopicName, topicIndex) => (
                             Object.keys(homeState.articles[eachTopicName]).map((eachAuthor, authorIndex) => (
@@ -45,15 +45,15 @@ export const HomePage: React.FC = () => {
                                         (homeState.userFilterSelections["authors"] || []).includes(article.author) ||
                                         (homeState.userFilterSelections["sources"] || []).includes(article.source);
 
-                                    // Generate a unique key using multiple properties
                                     const uniqueKey = `${article.url}--${topicIndex}--${authorIndex}--${articleIndex}`;
 
-                                    return shouldRender && (
-                                        <ArticleCardComponent
-                                            key={uniqueKey}
-                                            {...article}
-                                        />
-                                    )// Include the same key here for consistency
+                                    return (
+                                        <div key={uniqueKey} className={shouldRender ? 'd-block' : 'd-none'}>
+                                            <ArticleCardComponent
+                                                {...article}
+                                            />
+                                        </div>
+                                    )
                                 })
                             ))
                         ))
