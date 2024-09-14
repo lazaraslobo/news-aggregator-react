@@ -13,6 +13,8 @@ import useAuthActions from '../../hooks/useAuthActions';
 import {postApi_logUserOut} from '../../apis';
 import {LeftPanelSection} from "./sections/LeftPanel";
 import useHomePageActions from "../../hooks/useHomePageActions";
+import {ArticleCardComponent} from "../../components/article-card";
+import {EachArticleInformationType} from "../../redux/home-page/dataTypes";
 
 export const HomePage: React.FC = () => {
     const homeState = useSelector((state: RootState) => state.homePage);
@@ -27,9 +29,36 @@ export const HomePage: React.FC = () => {
     }
 
     return (
-        <div className="home-page-container container-fluid">
+        <div className="home-page-container container-fluid d-flex">
             <div className="col-3 left-panel-section">
                 <LeftPanelSection />
+            </div>
+            <div className="col-9">
+                <div className="d-flex flex-wrap justify-content-between gap-5 m-5">
+                    {
+                        Object.keys(homeState.articles).map((eachTopicName, topicIndex) => (
+                            Object.keys(homeState.articles[eachTopicName]).map((eachAuthor, authorIndex) => (
+                                (homeState.articles[eachTopicName][eachAuthor] as EachArticleInformationType[]).map((article, articleIndex) => {
+                                    const shouldRender =
+                                        !Object.keys(homeState.userFilterSelections || {}).length ||
+                                        (homeState.userFilterSelections["articles"] || []).includes(article.topic) ||
+                                        (homeState.userFilterSelections["authors"] || []).includes(article.author) ||
+                                        (homeState.userFilterSelections["sources"] || []).includes(article.source);
+
+                                    // Generate a unique key using multiple properties
+                                    const uniqueKey = `${article.url}--${topicIndex}--${authorIndex}--${articleIndex}`;
+
+                                    return shouldRender && (
+                                        <ArticleCardComponent
+                                            key={uniqueKey}
+                                            {...article}
+                                        />
+                                    )// Include the same key here for consistency
+                                })
+                            ))
+                        ))
+                    }
+                </div>
             </div>
         </div>
     );

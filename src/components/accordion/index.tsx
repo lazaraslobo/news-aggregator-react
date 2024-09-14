@@ -21,7 +21,7 @@ export const AccordionComponent: React.FC<AccordionComponentProps> = ({ heading,
             <div className="accordion-item">
                 <h2 className="accordion-header" id={componentId}>
                     <button
-                        className="accordion-button"
+                        className={`accordion-button ${selectionList.length > 0 && 'selected'}`}
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target={`#${componentTargetId}`}
