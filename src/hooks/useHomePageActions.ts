@@ -9,9 +9,13 @@ const useHomePageActions = () => {
     const updateUserFilterSelection = (props: {key: string, value: string}) =>
         dispatch(HOME_SAGA_ACTIONS.updateUserFilterSelection(props));
 
+    const updateUserPreferences = (props: {key: string, value: any}) =>
+        dispatch(HOME_SAGA_ACTIONS.updateUserPreferences(props));
+
     return {
         fetchAllArticles,
-        updateUserFilterSelection
+        updateUserFilterSelection,
+        updateUserPreferences
     };
 };
 

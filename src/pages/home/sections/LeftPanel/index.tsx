@@ -15,7 +15,11 @@ export const LeftPanelSection = () => {
     console.log("state ", homeState)
 
     const saveUserPreference = () => {
-        postApi_updateInsertUserPreferences("userSelections", {"lobo": "it worked"});
+        // postApi_updateInsertUserPreferences("userSelections", {"lobo": "it worked"});
+        homeActions.updateUserPreferences({
+            key: "userSelections",
+            value: homeState.userFilterSelections
+        });
     }
 
     return (

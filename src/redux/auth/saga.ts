@@ -9,7 +9,7 @@ function* handleLogin(action: ReturnType<typeof SAGA_ACTIONS.authLogin>) {
     try {
         yield put(REDUCER_ACTIONS.setProcessing({ isProcessing: true }));
         const response: AxiosResponse<any> = yield call(postApi_logUserIn, action.payload);
-        if(response.data?.token && Object.keys(response.data?.user).length > 0) {
+        if(response.data?.token && Object.keys(response.data?.data?.user).length > 0) {
             yield put(REDUCER_ACTIONS.authLoginComplete({ isAuthenticated: true }));
             window.location.href = window.location.origin;
         }

@@ -31,29 +31,29 @@ const homePageReducer = createReducer(initialState, (builder) => {
         })
         .addCase(HOME_REDUCER_ACTIONS.updateUserFilterSelectionCompleted, (state, action) => {
             const key = action.payload.key;
-            const value = action.payload.value;
+            let valueObj = action.payload.value as { [key: string]: string[] };
+            let value = action.payload.value as string;
 
-            // Ensure we have a valid selection array
-            const selection = state.userFilterSelections[key] || [];
-
-            // Check if the value is already in the selection
-            if (selection.includes(value)) {
-                // Remove the value from the selection
-                const updatedSelection = selection.filter(item => item !== value);
-
-                // If the selection is now empty, remove the key from the userFilterSelections
-                if (updatedSelection.length === 0) {
-                    const { [key]: _, ...remainingSelections } = state.userFilterSelections;
-                    state.userFilterSelections = remainingSelections;
-                } else {
-                    state.userFilterSelections[key] = updatedSelection;
-                }
+            console.log("FILTER UPDATE COMPELTED ", value, valueObj);
+            if(typeof valueObj === 'object' && valueObj !== null && !Array.isArray(valueObj)){
+                state.userFilterSelections = valueObj || {}
             } else {
-                // Add the value to the selection if it's not already included
-                state.userFilterSelections[key] = [...selection, value];
-            }
+                const selection = state.userFilterSelections[key] || [];
+                value = action.payload.value as string;
 
-            console.log("UPDATED ", JSON.stringify(state.userFilterSelections, null, 2));
+                if (selection.includes(value)) {
+                    const updatedSelection = selection.filter(item => item !== value);
+
+                    if (updatedSelection.length === 0) {
+                        const { [key]: _, ...remainingSelections } = state.userFilterSelections;
+                        state.userFilterSelections = remainingSelections;
+                    } else {
+                        state.userFilterSelections[key] = updatedSelection;
+                    }
+                } else {
+                    state.userFilterSelections[key] = [...selection, value];
+                }
+            }
 
             state.isProcessing = false;
             state.isSuccess = true;

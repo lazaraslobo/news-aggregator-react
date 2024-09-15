@@ -32,7 +32,7 @@ export const getApi_getAllArticles = async () => {
     return handleApiRequest(() => axiosInstance.get('/get-all-articles'));
 };
 
-export const postApi_updateInsertUserPreferences = async (key: string, value: any) => {
-    return handleApiRequest(() => axiosInstance.post('/update-preferences', {key, value}));
+export const postApi_updateInsertUserPreferences = async (props: { key: string, value: any }) => {
+    return handleApiRequest(() => axiosInstance.post('/update-preferences', props));
 };
 
