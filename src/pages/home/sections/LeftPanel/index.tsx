@@ -3,6 +3,7 @@ import {AccordionComponent} from "../../../../components/accordion";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import useHomePageActions from "../../../../hooks/useHomePageActions";
+import {postApi_updateInsertUserPreferences} from "../../../../apis";
 
 export const LeftPanelSection = () => {
     const homeActions = useHomePageActions();
@@ -13,11 +14,14 @@ export const LeftPanelSection = () => {
     }
     console.log("state ", homeState)
 
+    const saveUserPreference = () => {
+        postApi_updateInsertUserPreferences("userSelections", {"lobo": "it worked"});
+    }
 
     return (
         <div className="d-grid gap-2">
             <div className="col-12 d-flex my-3">
-                {Object.keys(homeState.userFilterSelections).length > 0 && <span className="preferences-cta" role="button">SAVE TO PREFERENCES</span>}
+                {Object.keys(homeState.userFilterSelections).length > 0 && <span className="preferences-cta" role="button" onClick={saveUserPreference}>SAVE TO PREFERENCES</span>}
             </div>
             <AccordionComponent heading={"Category"} items={homeState.articles}
                 selectionList={homeState.userFilterSelections['articles'] || []} onClick={value => componentFunctions.updateUserSelection("articles", value)}/>
