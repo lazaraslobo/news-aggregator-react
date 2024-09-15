@@ -30,6 +30,22 @@ const authReducer = createReducer(initialState, (builder) => {
                 isFailed: !isAuthenticated,
             }
         })
+        .addCase(REDUCER_ACTIONS.getCurrentUserComplete, (state, action) => {
+            const isAuthenticated: boolean = (
+                action.payload.id !== null && action.payload.id !== undefined &&
+                action.payload.email?.length > 0 &&
+                action.payload.name?.length > 0
+            );
+
+            if(isAuthenticated){
+                state.user = action.payload;
+            }
+
+            state.isProcessing = false;
+            state.isSuccess = true;
+            state.isFailed = false;
+            state.isAuthenticated = isAuthenticated;
+        })
         .addCase(REDUCER_ACTIONS.authLogoutComplete, (state) => {
             state.isAuthenticated = false;
         });

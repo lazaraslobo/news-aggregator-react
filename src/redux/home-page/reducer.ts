@@ -30,14 +30,13 @@ const homePageReducer = createReducer(initialState, (builder) => {
             state.isFailed = false;
         })
         .addCase(HOME_REDUCER_ACTIONS.updateUserFilterSelectionCompleted, (state, action) => {
-            const key = action.payload.key;
             let valueObj = action.payload.value as { [key: string]: string[] };
             let value = action.payload.value as string;
 
-            console.log("FILTER UPDATE COMPELTED ", value, valueObj);
-            if(typeof valueObj === 'object' && valueObj !== null && !Array.isArray(valueObj)){
+            if(action.payload.type === "userFilterSelections"){
                 state.userFilterSelections = valueObj || {}
             } else {
+                const key = action.payload.key;
                 const selection = state.userFilterSelections[key] || [];
                 value = action.payload.value as string;
 

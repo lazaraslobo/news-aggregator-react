@@ -2,18 +2,19 @@ import React, {useEffect} from 'react';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import {getApi_userInfo} from "../apis";
+import authActions from "../hooks/useAuthActions";
 
 interface ProtectedRouteProps {
     component: React.ComponentType;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ component: Component }) => {
+    const useAuthActions = authActions();
 
     const {isAuthenticated, isProcessing} = useSelector((state: RootState) => state.auth);
 
     useEffect(() => {
-        isAuthenticated === true && getApi_userInfo();
+        isAuthenticated === true && useAuthActions.fetchActiveUser();
     }, [isAuthenticated]);
 
     if(isProcessing === true){

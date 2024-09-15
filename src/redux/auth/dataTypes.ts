@@ -1,7 +1,9 @@
 import {SAGA_ACTION_TYPES} from "./actionTypes";
+import {UserResponseInnerType} from "../../interfaces-types/UserAuthTypes";
 
 // Define state type
 export type AuthState = {
+    user ?: UserResponseInnerType;
     isAuthenticated: boolean;
     isProcessing: boolean;
     isFailed: boolean;

@@ -13,7 +13,7 @@ import { EachArticleInformationType } from "../../redux/home-page/dataTypes";
 import { LeftPanelSection } from "./sections/LeftPanel";
 
 export const HomePage: React.FC = () => {
-    const homeState = useSelector((state: RootState) => state.homePage);
+    const {homeState, authState} = useSelector((state: RootState) => ({homeState: state.homePage, authState: state.auth}));
     const [userSearchTerm, setSearchTerm] = useState<string>("");
     const [visibleArticlesCount, setVisibleArticlesCount] = useState<number>(30);
     const homeActions = useHomePageActions();

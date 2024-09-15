@@ -11,19 +11,17 @@ function* getAllArticles(action: ReturnType<typeof HOME_SAGA_ACTIONS.fetchArticl
     try {
         yield put(HOME_REDUCER_ACTIONS.setProcessing({ isProcessing: true }));
         const response: AxiosResponseType<ArticlesFetchApiResponseType> = yield call(getApi_getAllArticles)
-        console.log("AT SAGA BRUHHHH ", response.data.data);
         yield put(HOME_REDUCER_ACTIONS.articlesFetchCompleted(response.data.data));
     } catch (error) {
         console.error("SAGA ERROR =>", error);
     }finally {
-        // yield put(HOME_REDUCER_ACTIONS.setProcessing({ isProcessing: false }));
+        yield put(HOME_REDUCER_ACTIONS.setProcessing({ isProcessing: false }));
     }
 }
 
 function* updateUserFilterSelection(action: ReturnType<typeof HOME_SAGA_ACTIONS.updateUserFilterSelection>) {
     try {
-        console.log("INNO ", action);
-        yield put(HOME_REDUCER_ACTIONS.updateUserFilterSelectionCompleted(action.payload));
+        yield put(HOME_REDUCER_ACTIONS.updateUserFilterSelectionCompleted({...action.payload,type: "singleUpdate"}));
     } catch (error) {
         console.error("SAGA ERROR =>", error);
     }finally {
@@ -33,16 +31,16 @@ function* updateUserFilterSelection(action: ReturnType<typeof HOME_SAGA_ACTIONS.
 
 function* updateUserPreferences(action: ReturnType<typeof HOME_SAGA_ACTIONS.updateUserPreferences>) {
     try {
-        // yield put(HOME_REDUCER_ACTIONS.updateUserFilterSelectionCompleted(action.payload));
         yield put(HOME_REDUCER_ACTIONS.setProcessing({ isProcessing: true }));
         const response: AxiosResponseType<UserResponseType> =
             yield call(postApi_updateInsertUserPreferences, action.payload);
-        console.log("RESPONSE ", response.data.data.user.preferences.userSelections.value);
-        yield put(HOME_REDUCER_ACTIONS.updateUserFilterSelectionCompleted({
-            key: action.payload.key,
-            value: response.data.data.user.preferences.userSelections.value
-        }));
-        console.log("the resp ", response);
+        if (response?.data?.data?.user?.preferences?.userSelections?.value) {
+            yield put(HOME_REDUCER_ACTIONS.updateUserFilterSelectionCompleted({
+                type: "userFilterSelections",
+                key: action.payload.key,
+                value: response.data.data.user.preferences.userSelections.value
+            }));
+        }
     } catch (error) {
         console.error("SAGA ERROR =>", error);
     }finally {

@@ -10,19 +10,21 @@ export type CreateAccountType = {
     password: CreateAccountInnertType;
 }
 
+export type UserResponseInnerType = {
+    id: number;
+    name: string;
+    email: string;
+    preferences ?: Preferences;
+    created_at: string;
+    updated_at: string;
+}
+
 export type UserResponseType = {
-    user: {
-        id: number;
-        name: string;
-        email: string;
-        preferences: Preferences;
-        created_at: string;
-        updated_at: string;
-    }
+    user: UserResponseInnerType
 }
 
 export type Preferences = {
-    userSelections: UserSelection;
+    userSelections ?: UserSelection;
 }
 
 export type UserSelection = {

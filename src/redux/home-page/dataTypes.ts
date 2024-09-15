@@ -31,3 +31,13 @@ export type HomePageStateType = BaseArticleType<EachArticleInformationType> & {
         [key: string]: string[];
     }
 };
+
+export type UpdateFilterEnumsType = "userFilterSelections" | "singleUpdate"
+
+export type UpdatedUserPreferencesType = {
+    type: UpdateFilterEnumsType;
+    key: string,
+    value: string | {
+        [key: string]: string | string[]
+    }
+};

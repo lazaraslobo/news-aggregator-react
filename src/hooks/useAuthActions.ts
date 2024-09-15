@@ -12,7 +12,10 @@ const useAuthActions = () => {
     const createAccount = (payload: CreateNewAccountPayload) =>
         dispatch(SAGA_ACTIONS.createAccount(payload));
 
-    return { login, logout, createAccount };
+    const fetchActiveUser = () =>
+        dispatch(SAGA_ACTIONS.fetchActiveUser());
+
+    return { login, logout, createAccount, fetchActiveUser };
 };
 
 export default useAuthActions;
