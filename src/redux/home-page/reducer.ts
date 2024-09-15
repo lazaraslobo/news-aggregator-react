@@ -38,7 +38,6 @@ const homePageReducer = createReducer(initialState, (builder) => {
                 const key = action.payload.key;
                 const selection = state.userFilterSelections[key] || [];
                 value = action.payload.value as string;
-                console.log("INCOMING ", value, action, selection, key);
 
                 if (selection.includes(value)) {
                     const updatedSelection = selection.filter(item => item !== value);

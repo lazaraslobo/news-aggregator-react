@@ -9,14 +9,15 @@ import { LeftPanelSection } from "./sections/LeftPanel";
 import './styles.scss';
 
 export const HomePage: React.FC = () => {
-    const {homeState} = useSelector((state: RootState) => ({homeState: state.homePage, authState: state.auth}));
+    const {homeState, authState} = useSelector((state: RootState) => ({homeState: state.homePage, authState: state.auth}));
     const [userSearchTerm, setSearchTerm] = useState<string>("");
     const [visibleArticlesCount, setVisibleArticlesCount] = useState<number>(30);
     const homeActions = useHomePageActions();
 
     useEffect(() => {
+        (authState.isAuthenticated && !Object.keys(homeState.articles || {}).length && !homeState.isProcessing && !authState.isProcessing) &&
         homeActions.fetchAllArticles();
-    }, []);
+    }, [authState.isAuthenticated]);
 
     const allArticles = Object.keys(homeState.articles).flatMap(topicName =>
         Object.keys(homeState.articles[topicName]).flatMap(authorName =>

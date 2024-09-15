@@ -11,10 +11,10 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ component: Component }) => {
     const useAuthActions = authActions();
 
-    const {isAuthenticated, isProcessing} = useSelector((state: RootState) => state.auth);
+    const {isAuthenticated, isProcessing, user} = useSelector((state: RootState) => state.auth);
 
     useEffect(() => {
-        isAuthenticated === true && useAuthActions.fetchActiveUser();
+        isAuthenticated === true && !user?.email?.length && useAuthActions.fetchActiveUser();
     }, [isAuthenticated]);
 
     if(isProcessing === true){
