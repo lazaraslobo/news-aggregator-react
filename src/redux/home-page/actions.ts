@@ -5,7 +5,7 @@ import {ArticlesFetchApiResponseType, UpdatedUserPreferencesType} from "./dataTy
 export const HOME_SAGA_ACTIONS = {
     fetchArticles: createAction(SAGA_ACTION_TYPES.FETCH_ARTICLES),
     updateUserFilterSelection: createAction<{ key: string, value: string }>(SAGA_ACTION_TYPES.UPDATE_USER_FILTER_SELECTIONS),
-    updateUserPreferences: createAction<{ key: string, value: any }>(SAGA_ACTION_TYPES.UPDATE_USER_PREFERENCE),
+    updateUserPreferences: createAction<{ key: string, value: any, onSuccessCallback: () => void }>(SAGA_ACTION_TYPES.UPDATE_USER_PREFERENCE),
 }
 
 export const HOME_REDUCER_ACTIONS = {

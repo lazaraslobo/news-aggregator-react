@@ -40,6 +40,10 @@ function* updateUserPreferences(action: ReturnType<typeof HOME_SAGA_ACTIONS.upda
                 key: action.payload.key,
                 value: response.data.data.user.preferences.userSelections.value
             }));
+
+            if(action.payload.onSuccessCallback){
+                action.payload.onSuccessCallback();
+            }
         }
     } catch (error) {
         console.error("SAGA ERROR =>", error);

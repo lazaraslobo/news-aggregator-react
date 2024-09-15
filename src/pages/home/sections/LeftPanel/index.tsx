@@ -3,12 +3,14 @@ import {AccordionComponent} from "../../../../components/accordion";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import useHomePageActions from "../../../../hooks/useHomePageActions";
+import {toast} from "react-toastify";
 
 export const LeftPanelSection = () => {
     const homeActions = useHomePageActions();
     const {homeState, authState} = useSelector((state: RootState) => ({homeState: state.homePage, authState: state.auth}));
 
     const componentFunctions = {
+        onSuccessPreferenceSaved: () => toast("Preferences updated."),
         updateUserSelection: (key: string, value: string) => homeActions.updateUserFilterSelection({key, value})
     }
     console.log("state ", {homeState, authState})
@@ -16,7 +18,8 @@ export const LeftPanelSection = () => {
     const saveUserPreference = () => {
         homeActions.updateUserPreferences({
             key: "userSelections",
-            value: homeState.userFilterSelections || {}
+            value: homeState.userFilterSelections || {},
+            onSuccessCallback: componentFunctions.onSuccessPreferenceSaved
         });
     }
 
