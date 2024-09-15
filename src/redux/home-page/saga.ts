@@ -6,6 +6,7 @@ import {ArticlesFetchApiResponseType} from './dataTypes';
 import {AxiosResponseType} from "../../interfaces-types/AxiosResponseType";
 import {HOME_REDUCER_ACTIONS} from "./actions";
 import {UserResponseType} from "../../interfaces-types/UserAuthTypes";
+import {toast} from "react-toastify";
 
 function* getAllArticles(action: ReturnType<typeof HOME_SAGA_ACTIONS.fetchArticles>) {
     try {
@@ -40,10 +41,9 @@ function* updateUserPreferences(action: ReturnType<typeof HOME_SAGA_ACTIONS.upda
                 key: action.payload.key,
                 value: response.data.data.user.preferences.userSelections.value
             }));
-
-            if(action.payload.onSuccessCallback){
-                action.payload.onSuccessCallback();
-            }
+            toast("Preferences updated.", {
+                autoClose: 2000
+            })
         }
     } catch (error) {
         console.error("SAGA ERROR =>", error);

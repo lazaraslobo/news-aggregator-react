@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles.scss";
 
 // Define the props interface
 interface AccordionComponentProps {
     heading: string;
     items: { [key: string]: number | any };
-    selectionList: string[]
-    onClick ?: (key: string) => void;
+    selectionList: string[];
+    onClick?: (key: string) => void;
 }
 
 const doNothing = (...props: any) => null;
 
 export const AccordionComponent: React.FC<AccordionComponentProps> = ({ heading, items, selectionList, onClick = doNothing }) => {
+    const [visibleItemCount, setVisibleItemCount] = useState(15); // Initial limit
 
     const componentId = `${heading}-accordion`;
     const componentTargetId = `${heading}-target`;
+
+    const handleViewMore = () => {
+        setVisibleItemCount(prevCount => prevCount + 15); // Increase limit by 15
+    };
 
     return (
         <div className="accordion" id={componentId}>
@@ -39,13 +44,26 @@ export const AccordionComponent: React.FC<AccordionComponentProps> = ({ heading,
                 >
                     <div className="accordion-body d-grid">
                         {
-                            Object.keys(items).map((eachKey, index) => (
-                                <div className={`each-item ${selectionList.includes(eachKey) && 'selected'}`}
-                                     key={index} role="button" onClick={() => onClick(eachKey)}>
+                            Object.keys(items)
+                                .slice(0, visibleItemCount) // Display only up to visibleItemCount
+                                .map((eachKey, index) => (
+                                    <div
+                                        className={`each-item ${selectionList.includes(eachKey) && 'selected'}`}
+                                        key={index}
+                                        role="button"
+                                        onClick={() => onClick(eachKey)}
+                                    >
                                         <span>{eachKey}</span>
                                         {typeof items[eachKey] === 'number' && <span>{items[eachKey]}</span>}
-                                </div>
-                            ))
+                                    </div>
+                                ))
+                        }
+                        {
+                            Object.keys(items).length > visibleItemCount && (
+                                <button className="view-more-button" onClick={handleViewMore}>
+                                    View More
+                                </button>
+                            )
                         }
                     </div>
                 </div>

@@ -11,7 +11,7 @@ function* handleLogin(action: ReturnType<typeof SAGA_ACTIONS.authLogin>) {
     try {
         yield put(REDUCER_ACTIONS.setProcessing({ isProcessing: true }));
         const response: AxiosResponse<any> = yield call(postApi_logUserIn, action.payload);
-        if(response.data?.token && Object.keys(response.data?.data?.user).length > 0) {
+        if(response.data?.data?.token && Object.keys(response.data?.data?.user).length > 0) {
             yield put(REDUCER_ACTIONS.authLoginComplete({ isAuthenticated: true }));
             window.location.href = window.location.origin;
         }
@@ -24,6 +24,7 @@ function* handleCreateNewAccount(action: ReturnType<typeof SAGA_ACTIONS.createAc
     try {
         yield put(REDUCER_ACTIONS.setProcessing({ isProcessing: true }));
         const response: AxiosResponse<any> = yield call(postApi_createNewAccount, action.payload);
+        console.log("CREATE ACCOUINT RESP ", response);
         if (action.payload.onSuccessCallback){
             action.payload.onSuccessCallback();
         }

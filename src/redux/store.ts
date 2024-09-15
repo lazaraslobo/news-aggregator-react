@@ -11,7 +11,9 @@ const store = configureStore({
         homePage: homeReducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(sagaMiddleware),
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }).concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(authSaga);

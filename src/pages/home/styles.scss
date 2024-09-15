@@ -32,12 +32,16 @@
         border: unset;
         font-weight: 700;
     }
-    .preferences-cta{
+    .preferences-cta, .preferences-cta-reset{
         background: #33c100;
         padding: 5px 10px;
         border-radius: 30px;
         color: white;
         font-weight: 500;
         font-size: 0.8rem;
+    }
+
+    .preferences-cta-reset{
+        background: #e53131;
     }
 }
