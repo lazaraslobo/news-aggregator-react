@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import './styles.scss';
 import {ProgressComponent} from "../../components/progress";
 import {InputBoxComponent} from "../../components/user-controlls/input-box";
 import {ButtonComponent} from "../../components/user-controlls/button";
@@ -11,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import useAuthActions from '../../hooks/useAuthActions';
 import {postApi_logUserOut} from '../../apis';
+import './styles.scss';
 
 export const LoginPage: React.FC = () => {
     const authState = useSelector((state: RootState) => state.auth);

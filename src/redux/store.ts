@@ -3,10 +3,8 @@ import createSagaMiddleware from 'redux-saga';
 import { authReducer, authSaga } from './auth';
 import { homeReducer, homeSaga } from './home-page';
 
-// Create saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
-// Configure store
 const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -16,7 +14,6 @@ const store = configureStore({
         getDefaultMiddleware().concat(sagaMiddleware),
 });
 
-// Run saga
 sagaMiddleware.run(authSaga);
 sagaMiddleware.run(homeSaga);
 

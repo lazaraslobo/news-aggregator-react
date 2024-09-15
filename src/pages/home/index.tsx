@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import './styles.scss';
-import { ProgressComponent } from "../../components/progress";
 import { InputBoxComponent } from "../../components/user-controlls/input-box";
-import { ButtonComponent } from "../../components/user-controlls/button";
-import { Link } from "react-router-dom";
-import { LogoHeadingCardComponent } from "../../components/logo-heading-card";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import useHomePageActions from "../../hooks/useHomePageActions";
 import { ArticleCardComponent } from "../../components/article-card";
 import { EachArticleInformationType } from "../../redux/home-page/dataTypes";
 import { LeftPanelSection } from "./sections/LeftPanel";
+import './styles.scss';
 
 export const HomePage: React.FC = () => {
-    const {homeState, authState} = useSelector((state: RootState) => ({homeState: state.homePage, authState: state.auth}));
+    const {homeState} = useSelector((state: RootState) => ({homeState: state.homePage, authState: state.auth}));
     const [userSearchTerm, setSearchTerm] = useState<string>("");
     const [visibleArticlesCount, setVisibleArticlesCount] = useState<number>(30);
     const homeActions = useHomePageActions();
@@ -22,14 +18,12 @@ export const HomePage: React.FC = () => {
         homeActions.fetchAllArticles();
     }, []);
 
-    // Flatten the articles into a single array
     const allArticles = Object.keys(homeState.articles).flatMap(topicName =>
         Object.keys(homeState.articles[topicName]).flatMap(authorName =>
             (homeState.articles[topicName][authorName] as EachArticleInformationType[])
         )
     );
 
-    // Filter articles based on search term and user filters
     const filteredArticles = allArticles.filter(article => {
         const { userFilterSelections = {} } = homeState;
 

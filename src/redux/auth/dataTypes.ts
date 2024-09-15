@@ -1,7 +1,6 @@
 import {SAGA_ACTION_TYPES} from "./actionTypes";
 import {UserResponseInnerType} from "../../interfaces-types/UserAuthTypes";
 
-// Define state type
 export type AuthState = {
     user ?: UserResponseInnerType;
     isAuthenticated: boolean;
@@ -10,7 +9,6 @@ export type AuthState = {
     isSuccess: boolean;
 }
 
-// Define action payloads
 export type LoginPayload = {
     userEmail: string;
     userPassword: string;
@@ -27,7 +25,6 @@ export type CreateNewAccountPayload  = {
 }
 
 
-// Define action type= s
 type AuthLoginAction = {
     type: typeof SAGA_ACTION_TYPES.AUTH_LOGIN;
     payload: LoginPayload;

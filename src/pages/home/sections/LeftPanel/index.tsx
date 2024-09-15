@@ -1,9 +1,8 @@
-import React, {FC, useEffect} from 'react';
+import React from 'react';
 import {AccordionComponent} from "../../../../components/accordion";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import useHomePageActions from "../../../../hooks/useHomePageActions";
-import {postApi_updateInsertUserPreferences} from "../../../../apis";
 
 export const LeftPanelSection = () => {
     const homeActions = useHomePageActions();
@@ -15,7 +14,6 @@ export const LeftPanelSection = () => {
     console.log("state ", homeState)
 
     const saveUserPreference = () => {
-        // postApi_updateInsertUserPreferences("userSelections", {"lobo": "it worked"});
         homeActions.updateUserPreferences({
             key: "userSelections",
             value: homeState.userFilterSelections

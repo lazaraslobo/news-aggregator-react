@@ -5,9 +5,11 @@ import {HomePage} from "../pages/home";
 import pagePaths from "./page-paths";
 import ProtectedRoute from "./protectedRoutes";
 
-const Temp = () => (<h1>FOLK</h1>)
-
 export const router = createBrowserRouter([
+    {
+        path: pagePaths.DASHBOARD_PAGE,
+        element: <ProtectedRoute component={HomePage}/>,
+    },
     {
         path: pagePaths.LOGIN_PAGE,
         element: <LoginPage />,
@@ -15,9 +17,5 @@ export const router = createBrowserRouter([
     {
         path: pagePaths.SIGNUP_PAGE,
         element: <SignupPage />,
-    },
-    {
-        path: pagePaths.DASHBOARD_PAGE,
-        element: <ProtectedRoute component={HomePage}/>,
     },
 ]);

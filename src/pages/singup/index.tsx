@@ -1,4 +1,3 @@
-// Signup.tsx
 import React, {useState} from 'react';
 import {ProgressComponent} from "../../components/progress";
 import {InputBoxComponent} from "../../components/user-controlls/input-box";
@@ -11,8 +10,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import useAuthActions from '../../hooks/useAuthActions';
 import { useNavigate } from 'react-router-dom';
-import './styles.scss';
 import { toast } from 'react-toastify';
+import './styles.scss';
 
 const defaultInputsValue: CreateAccountType = {
     fullName: {
@@ -62,7 +61,6 @@ export const SignupPage: React.FC = () => {
         onSuccessAccountCreation: () =>  navigate(pagePaths.DASHBOARD_PAGE)
     }
 
-    //state loaders
     const isDisableActions = authState.isProcessing ||
         userInputs.fullName.hasError ||
         userInputs.email.hasError ||
