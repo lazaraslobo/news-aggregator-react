@@ -32,13 +32,13 @@ const homePageReducer = createReducer(initialState, (builder) => {
         .addCase(HOME_REDUCER_ACTIONS.updateUserFilterSelectionCompleted, (state, action) => {
             let valueObj = action.payload.value as { [key: string]: string[] };
             let value = action.payload.value as string;
-
             if(action.payload.type === "userFilterSelections"){
                 state.userFilterSelections = valueObj || {}
             } else {
                 const key = action.payload.key;
                 const selection = state.userFilterSelections[key] || [];
                 value = action.payload.value as string;
+                console.log("INCOMING ", value, action, selection, key);
 
                 if (selection.includes(value)) {
                     const updatedSelection = selection.filter(item => item !== value);
@@ -50,7 +50,11 @@ const homePageReducer = createReducer(initialState, (builder) => {
                         state.userFilterSelections[key] = updatedSelection;
                     }
                 } else {
-                    state.userFilterSelections[key] = [...selection, value];
+                    selection.push(value);
+                    state.userFilterSelections = {
+                        ...state.userFilterSelections,
+                        [key]: selection
+                    };
                 }
             }
 

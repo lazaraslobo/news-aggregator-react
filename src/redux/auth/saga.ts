@@ -43,12 +43,13 @@ function* handleFetchCurrentUser(action: ReturnType<typeof SAGA_ACTIONS.fetchAct
     try {
         yield put(REDUCER_ACTIONS.setProcessing({ isProcessing: true }));
         const response: AxiosResponse<{ data: UserResponseInnerType }> = yield call(getApi_userInfo);
-        if (response?.data?.data?.preferences?.userSelections?.value) {
-            yield put(HOME_REDUCER_ACTIONS.updateUserFilterSelectionCompleted({
-                type: "userFilterSelections",
-                key: "",
-                value: response.data.data.preferences.userSelections.value
-            }));
+        if (response?.data?.data?.preferences?.userSelections?.value &&
+            typeof response.data.data.preferences.userSelections.value === 'object'){
+                yield put(HOME_REDUCER_ACTIONS.updateUserFilterSelectionCompleted({
+                    type: "userFilterSelections",
+                    key: "",
+                    value: response.data.data.preferences.userSelections.value
+                }));
         }
         yield put(REDUCER_ACTIONS.getCurrentUserComplete(response.data.data));
     } catch (error) {
