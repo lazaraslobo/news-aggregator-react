@@ -16,6 +16,9 @@ export const LeftPanelSection = () => {
 
     return (
         <div className="d-grid gap-2">
+            <div className="col-12 d-flex my-3">
+                {Object.keys(homeState.userFilterSelections).length > 0 && <span className="preferences-cta" role="button">SAVE TO PREFERENCES</span>}
+            </div>
             <AccordionComponent heading={"Category"} items={homeState.articles}
                 selectionList={homeState.userFilterSelections['articles'] || []} onClick={value => componentFunctions.updateUserSelection("articles", value)}/>
             <AccordionComponent heading={"Sources"} items={homeState.sources}
