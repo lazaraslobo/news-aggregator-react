@@ -31,12 +31,18 @@ export const LeftPanelSection = () => {
                           onClick={() => saveUserPreference()}>SAVE TO PREFERENCES</span>}
                 <span className="preferences-cta-reset" role="button" onClick={() => saveUserPreference(true)}>RESET PREFERENCES</span>
             </div>
+
             <AccordionComponent heading={"Category"} items={homeState.articles}
-                                selectionList={homeState.userFilterSelections['articles'] || []} onClick={value => componentFunctions.updateUserSelection("articles", value)}/>
+                selectionList={homeState.userFilterSelections['articles'] || []}
+                onClick={value => componentFunctions.updateUserSelection("articles", value)}/>
+
             <AccordionComponent heading={"Sources"} items={homeState.sources}
-                selectionList={homeState.userFilterSelections['sources'] || []} onClick={value => componentFunctions.updateUserSelection("sources", value)}/>
+                selectionList={homeState.userFilterSelections['sources'] || []}
+                onClick={value => componentFunctions.updateUserSelection("sources", value)}/>
+
             <AccordionComponent heading={"Authors"} items={homeState.authors}
-                selectionList={homeState.userFilterSelections['authors'] || []}  onClick={value => componentFunctions.updateUserSelection("authors", value)}/>
+                selectionList={homeState.userFilterSelections['authors'] || []}
+                onClick={value => componentFunctions.updateUserSelection("authors", value)}/>
         </div>
     )
 }

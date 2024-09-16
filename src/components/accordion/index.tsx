@@ -12,13 +12,13 @@ interface AccordionComponentProps {
 const doNothing = (...props: any) => null;
 
 export const AccordionComponent: React.FC<AccordionComponentProps> = ({ heading, items, selectionList, onClick = doNothing }) => {
-    const [visibleItemCount, setVisibleItemCount] = useState(1000); // Initial limit
+    const [visibleItemCount, setVisibleItemCount] = useState(15);
 
     const componentId = `${heading}-accordion`;
     const componentTargetId = `${heading}-target`;
 
     const handleViewMore = () => {
-        setVisibleItemCount(prevCount => prevCount + 15); // Increase limit by 15
+        setVisibleItemCount(prevCount => prevCount + 15);
     };
 
     return (
@@ -33,7 +33,7 @@ export const AccordionComponent: React.FC<AccordionComponentProps> = ({ heading,
                         aria-expanded="true"
                         aria-controls={componentTargetId}
                     >
-                        {heading}
+                        {heading} - {Object.keys(items).length}
                     </button>
                 </h2>
                 <div
