@@ -38,13 +38,13 @@ export const LeftPanelSection: React.FC<componentProps> = ({onDateSelectionCallb
                 <span className="preferences-cta-reset" role="button" onClick={() => saveUserPreference(true)}>RESET PREFERENCES</span>
             </div>
 
-            <div className="d-flex gap-2 date-filter-container">
-                <div className="col-6">
+            <div className="d-flex date-filter-container justify-content-between">
+                <div className="col-5">
                     <span>From</span>
                     <input id="startDate" className="form-control" type="date" placeholder="From"
                            onChange={e => onDateSelectionCallback(e.target.value, "from")}/>
                 </div>
-                <div className="col-6">
+                <div className="col-5">
                     <span>To</span>
                     <input id="startDate" className="form-control" type="date" placeholder="To"
                            onChange={e => onDateSelectionCallback(e.target.value, "to")}/>
