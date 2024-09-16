@@ -32,13 +32,13 @@ export const ArticleCardComponent: React.FC<EachArticleInformationType> = ({
                 <p>
                     {truncateText(description, 80)}
                 </p>
-                <div className="d-flex flex-wrap justify-content-between my-3 text-small">
+                <div className="d-flex flex-wrap gap-2 my-3 text-small">
                     <span>{source || "-"}</span> ●
                     <span>{topic || "-"}</span> ●
                     <span>{author || "-"}</span> ●
                     <span>{whichApi || "-"}</span>
                 </div>
-
+                <hr/>
                 <div className="d-flex justify-content-between">
                     <a href={url} target="_blank" className="article-card-cta">
                         OPEN
