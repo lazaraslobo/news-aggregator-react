@@ -7,11 +7,19 @@ import { ArticleCardComponent } from "../../components/article-card";
 import { EachArticleInformationType } from "../../redux/home-page/dataTypes";
 import { LeftPanelSection } from "./sections/LeftPanel";
 import './styles.scss';
+type datesType = "from"|"to";
 
 export const HomePage: React.FC = () => {
     const {homeState, authState} = useSelector((state: RootState) => ({homeState: state.homePage, authState: state.auth}));
     const [userSearchTerm, setSearchTerm] = useState<string>("");
     const [visibleArticlesCount, setVisibleArticlesCount] = useState<number>(30);
+    const [filterDates, setFilterDates] = useState<Record<datesType, string>>({
+        from: '',
+        to: ''
+    });
+
+    console.log("here ", filterDates);
+
     const homeActions = useHomePageActions();
 
     useEffect(() => {
@@ -45,22 +53,41 @@ export const HomePage: React.FC = () => {
             (userFilterSelections["sources"] || []).includes(article.source);
 
         const isFilterSelectionsEmpty = Object.keys(userFilterSelections).length === 0;
+
+        const isWithinDateRange = () => {
+            if (filterDates.from || filterDates.to) {
+                const publishedDate = new Date(article.publishedAt);
+                const fromDate = filterDates.from ? new Date(filterDates.from) : null;
+                const toDate = filterDates.to ? new Date(filterDates.to) : null;
+
+                // Check if the article's published date is between from and to dates
+                if (fromDate && publishedDate < fromDate) return false;
+                if (toDate && publishedDate > toDate) return false;
+            }
+            return true;
+        };
+
         const shouldRender =
             (userSearchTerm.length > 0 && hasUserSearchTermMatch) ||
             (isSelectedByFilters && !isFilterSelectionsEmpty) ||
             (isFilterSelectionsEmpty && !userSearchTerm);
 
-        return shouldRender;
+        // Final check to include date filtering
+        return shouldRender && isWithinDateRange();
     });
 
     const handleViewMore = () => {
         setVisibleArticlesCount(prevCount => prevCount + 30);
     };
 
+    const onDateFilterChange = (date: string, type: datesType) => {
+        setFilterDates({...filterDates, [type]: date});
+    }
+
     return (
         <div className="home-page-container container-fluid d-flex flex-wrap p-0">
             <div className="col-12 col-lg-3 left-panel-section">
-                <LeftPanelSection />
+                <LeftPanelSection onDateSelectionCallback={onDateFilterChange}/>
             </div>
             <div className="col-12 col-lg-9">
                 <div className="d-flex flex-wrap justify-content-around gap-5">
