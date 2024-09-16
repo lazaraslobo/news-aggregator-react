@@ -8,6 +8,7 @@ export type EachArticleInformationType = {
     content: string;
     topic: string;
     author: string;
+    whichApi: string
 };
 
 type BaseArticleType<T> = {

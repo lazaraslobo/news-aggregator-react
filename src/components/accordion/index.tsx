@@ -12,7 +12,7 @@ interface AccordionComponentProps {
 const doNothing = (...props: any) => null;
 
 export const AccordionComponent: React.FC<AccordionComponentProps> = ({ heading, items, selectionList, onClick = doNothing }) => {
-    const [visibleItemCount, setVisibleItemCount] = useState(15); // Initial limit
+    const [visibleItemCount, setVisibleItemCount] = useState(1000); // Initial limit
 
     const componentId = `${heading}-accordion`;
     const componentTargetId = `${heading}-target`;

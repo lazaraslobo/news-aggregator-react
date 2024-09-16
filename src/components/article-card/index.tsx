@@ -12,7 +12,8 @@ export const ArticleCardComponent: React.FC<EachArticleInformationType> = ({
    publishedAt,
    content,
    topic,
-   author
+   author,
+   whichApi
 }) => {
 
     const truncateText = (text: string, maxLength = 120) => {
@@ -34,7 +35,8 @@ export const ArticleCardComponent: React.FC<EachArticleInformationType> = ({
                 <div className="d-flex flex-wrap justify-content-between my-3 text-small">
                     <span>{source || "-"}</span> ●
                     <span>{topic || "-"}</span> ●
-                    <span>{author || "-"}</span>
+                    <span>{author || "-"}</span> ●
+                    <span>{whichApi || "-"}</span>
                 </div>
 
                 <div className="d-flex justify-content-between">
