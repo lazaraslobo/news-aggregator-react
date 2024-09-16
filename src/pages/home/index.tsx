@@ -106,6 +106,8 @@ export const HomePage: React.FC = () => {
                                 {...article}
                             />
                         ))}
+
+                        {!filteredArticles.length && <span className="no-results">No Results 😔 </span>}
                     </div>
                     {filteredArticles.length > visibleArticlesCount && (
                         <div className="col-12 d-flex justify-content-center mt-3">
